@@ -1,0 +1,109 @@
+.search-card {
+  background: linear-gradient(180deg, #ffffff, #f7fbff);
+  border-radius: calc(var(--card-radius) + 6px);
+  padding: 0;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.06);
+  border: 1px solid rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+
+.search-card .card-body {
+  padding: 1.25rem;
+}
+
+/* Input group styling for cleaner controls */
+.search-form .input-group {
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 6px 16px rgba(12,24,48,0.04);
+  border: 1px solid rgba(2,6,23,0.03);
+  transition: transform 150ms ease, box-shadow 180ms ease;
+}
+
+.search-form .input-group:focus-within,
+.search-form .input-group:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(2,6,23,0.08);
+}
+
+/* icon addon */
+.search-form .input-group .input-group-text {
+  background: transparent;
+  border: none;
+  color: var(--brand-primary);
+  width: 46px;
+  justify-content: center;
+  font-size: 1.05rem;
+}
+
+/* form controls: flush style, larger padding */
+.search-form .form-control {
+  border: none;
+  background: transparent;
+  padding: 0.75rem 0.75rem;
+  font-size: 0.95rem;
+  color: var(--heading-color);
+  box-shadow: none;
+}
+
+/* subtle focus */
+.search-form .form-control:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* date input small tweak for better alignment */
+.search-form input[type="date"] {
+  padding-right: 0.5rem;
+}
+
+/* search button */
+.btn-search {
+  padding: 0.65rem 1.1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary));
+  border: none;
+  box-shadow: 0 8px 20px rgba(0,105,217,0.12);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.btn-search:hover,
+.btn-search:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(0,105,217,0.14);
+}
+
+/* responsive: stack and expand on small screens */
+@media (max-width: 767.98px) {
+  .search-form .col-md-5,
+  .search-form .col-md-2 {
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .search-card .card-body {
+    padding: 1rem;
+  }
+  .col-12.d-flex.justify-content-end {
+    justify-content: center !important;
+    margin-top: 0.5rem;
+  }
+  .btn-search {
+    width: 100%;
+  }
+}
+
+/* small visual polish for labels */
+.search-form .form-label {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+/* allow icon color to slightly darken on hover */
+.search-form .input-group:hover .input-group-text,
+.search-form .input-group:focus-within .input-group-text {
+  color: var(--brand-secondary);
+}

@@ -1,0 +1,33 @@
+<div class="container">
+  <h2 class="page-title">Book Your Ticket</h2>
+
+  <div class="card custom-card p-4">
+    <form class="row g-4">
+      <div class="col-md-6">
+        <label class="form-label">Passenger Name</label>
+        <input type="text" class="form-control" placeholder="Enter full name" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Contact Number</label>
+        <input type="tel" class="form-control" placeholder="Enter phone number" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Seat Number</label>
+        <input type="text" class="form-control" placeholder="e.g. A1, B2" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Payment Method</label>
+        <select class="form-select" required>
+          <option value="" disabled selected>Select payment method</option>
+          <option value="card">Credit Card</option>
+          <option value="upi">UPI</option>
+          <option value="netbanking">Net Banking</option>
+          <option value="cod">Cash on Delivery</option>
+        </select>
+      </div>
+      <div class="col-12 text-center">
+        <button type="submit" class="btn btn-primary mt-3">Confirm Booking</button>
+      </div>
+    </form>
+  </div>
+</div>

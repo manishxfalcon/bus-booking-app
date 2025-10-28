@@ -1,0 +1,63 @@
+<div class="container mt-5">
+  <h2 class="page-title text-center mb-4 fw-bold">
+    <i class="fa fa-bus text-primary me-2"></i> Search for Buses
+  </h2>
+
+  <div class="card search-card">
+    <div class="card-body">
+      <form class="row g-3 search-form">
+
+        <!-- From -->
+        <div class="col-md-5">
+          <label class="form-label">From</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fa fa-map-marker"></i>
+            </span>
+            <select class="form-control" name="fromlocationId" required [(ngModel)]="searchObj.fromlocationId">
+              <option value="" selected disabled>Choose departure city</option>
+              @for (item of locationList; track $index) {
+                <option [value]="item.locationId">{{ item.locationName }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <!-- To -->
+        <div class="col-md-5">
+          <label class="form-label">To</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fa fa-location-arrow"></i>
+            </span>
+            <select class="form-control" name="tolocationId" required [(ngModel)]="searchObj.tolocationId">
+              <option value="" selected disabled>Choose arrival city   </option>
+              @for (item of locationList; track $index) {
+                <option [value]="item.locationId">{{ item.locationName }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <!-- Date -->
+        <div class="col-md-2">
+          <label class="form-label">Date</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fa fa-calendar"></i>
+            </span>
+            <input type="date" name="date" [(ngModel)]="searchObj.date" class="form-control" required>
+          </div>
+        </div>
+
+        <!-- Search Button -->
+        <div class="col-12 d-flex justify-content-end align-items-center mt-2">
+          <button type="button" (click)="searchBus()"   class="btn btn-search">
+            <i class="fa fa-search me-2"></i> Search Buses
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
