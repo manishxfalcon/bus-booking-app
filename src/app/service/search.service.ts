@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class SearchService {
 
+  
+
   constructor(private http: HttpClient) { }
 
   searchBus(fromId:string, toId:string, date:string){

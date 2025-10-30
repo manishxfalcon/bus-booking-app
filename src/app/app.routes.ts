@@ -20,7 +20,7 @@ export const routes: Routes = [
         component: SearchResultComponent
     },
     {
-        path:"book-ticket",
+        path:"book-ticket/:scheduleId",
         component: BookTicketComponent
     },
     {

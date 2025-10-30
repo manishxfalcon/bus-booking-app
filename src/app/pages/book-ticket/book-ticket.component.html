@@ -1,33 +1,189 @@
-<div class="container">
-  <h2 class="page-title">Book Your Ticket</h2>
+<div class="container py-4">
+  <!-- Header -->
+  <div class="card mb-4 shadow-sm rounded-3 border-0 hstack gap-3 align-items-center">
+    <div class="flex-grow-1">
+      <h4 class="mb-1 text-primary fw-bold">
+        {{ busDetails.busName }}
+        <small class="text-muted">({{ busDetails.busVehicleNo }})</small>
+      </h4>
+      <div class="text-muted">
+        {{ busDetails.fromLocationName }} → {{ busDetails.toLocationName }}
+      </div>
+    </div>
+    <div class="text-end">
+      <div class="small text-muted">Departure</div>
+      <div class="fw-semibold">
+        {{ busDetails.departureTime | date: 'dd MMM yyyy, h:mm a' }}
+      </div>
+    </div>
+  </div>
 
-  <div class="card custom-card p-4">
-    <form class="row g-4">
-      <div class="col-md-6">
-        <label class="form-label">Passenger Name</label>
-        <input type="text" class="form-control" placeholder="Enter full name" required>
+  <!-- Main row -->
+  <div class="row g-4 align-items-stretch">
+    <!-- LEFT: Seat Selection -->
+    <div class="col-lg-7">
+      <div class="card h-100 shadow-sm rounded-3 border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Select Your Seats</h5>
+          <div class="small">Click or press <kbd>Enter</kbd> to select</div>
+        </div>
+
+        <div class="card-body seat-area d-flex flex-column">
+          <!-- Driver -->
+          <div class="d-flex justify-content-end mb-3 pe-4">
+            <div class="driver-badge">Driver</div>
+          </div>
+
+          <!-- Seat Grid (vertical orientation) -->
+          <div class="bus-layout mx-auto">
+            <div class="d-flex justify-content-center align-items-start">
+              <!-- Seat layout -->
+              <div class="bus-layout mx-auto">
+                <div class="d-flex flex-column gap-3">
+                  <div class="d-flex justify-content-center align-items-center"
+                    *ngFor="let rowIndex of [].constructor(leftSeatPairs.length); let i = index">
+                    <!-- Left seat pair -->
+                    <div class="d-flex gap-2 me-4">
+                      <div class="seat-wrapper" *ngFor="let s of leftSeatPairs[i]">
+                        <div class="seat" [class.selected]="s.selected" [class.disabled]="s.disabled" tabindex="0"
+                          role="button" [attr.aria-pressed]="s.selected" (click)="toggleSeat(s, $event)"
+                          (keydown)="onSeatKey($event, s)" title="Seat {{ s.number }}">
+                          <span class="seat-label">{{ s.number }}</span>
+                          <span class="seat-chip">A</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Aisle -->
+                    <div class="aisle mx-3"></div>
+
+                    <!-- Right seat pair -->
+                    <div class="d-flex gap-2 ms-4">
+                      <div class="seat-wrapper" *ngFor="let s of rightSeatPairs[i]">
+                        <div class="seat" [class.selected]="s.selected" [class.disabled]="s.disabled" tabindex="0"
+                          role="button" [attr.aria-pressed]="s.selected" (click)="toggleSeat(s, $event)"
+                          (keydown)="onSeatKey($event, s)" title="Seat {{ s.number }}">
+                          <span class="seat-label">{{ s.number }}</span>
+                          <span class="seat-chip">B</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Legend -->
+          <div class="mt-4 d-flex gap-3 justify-content-center legend-wrap">
+            <div class="legend-item d-flex align-items-center gap-2">
+              <div class="legend-box available"></div>
+              <small class="text-muted">Available</small>
+            </div>
+            <div class="legend-item d-flex align-items-center gap-2">
+              <div class="legend-box selected"></div>
+              <small class="text-muted">Selected</small>
+            </div>
+            <div class="legend-item d-flex align-items-center gap-2">
+              <div class="legend-box disabled"></div>
+              <small class="text-muted">Occupied</small>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-6">
-        <label class="form-label">Contact Number</label>
-        <input type="tel" class="form-control" placeholder="Enter phone number" required>
+    </div>
+
+    <!-- RIGHT: Summary & Passenger Details -->
+    <div class="col-lg-5">
+      <div class="d-flex flex-column h-100 gap-3">
+        <!-- Booking Summary -->
+        <div class="card shadow-sm rounded-3 border-0 h-50">
+          <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Booking Summary</h5>
+            <small class="text-white-50">Instant confirmation</small>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-2">
+              <div class="text-muted">Bus</div>
+              <div class="fw-medium">{{ busDetails.busName }}</div>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <div class="text-muted">Route</div>
+              <div class="fw-medium">
+                {{ busDetails.fromLocationName }} → {{ busDetails.toLocationName }}
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <div class="text-muted">Seats</div>
+              <div class="fw-semibold">{{ selectedSeats.length }}</div>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <div class="text-muted">Fare / seat</div>
+              <div class="fw-semibold">₹{{ busDetails.price }}</div>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between">
+              <div class="text-muted">Subtotal</div>
+              <div>₹{{ subTotal }}</div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="text-muted">Tax (5%)</div>
+              <div>₹{{ taxAmount }}</div>
+            </div>
+            <div class="d-flex justify-content-between mt-3 fs-5 fw-bold">
+              <div>Total</div>
+              <div>₹{{ totalAmount }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Passenger Details -->
+        <div class="card shadow-sm rounded-3 border-0 h-50">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Passenger Details</h5>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <label class="form-label small mb-1">Full name</label>
+            <input class="form-control mb-2" [(ngModel)]="user.name" placeholder="Your full name" />
+
+            <label class="form-label small mb-1">Email</label>
+            <input class="form-control mb-2" [(ngModel)]="user.email" placeholder="you@domain.com" />
+
+            <label class="form-label small mb-1">Phone</label>
+            <input class="form-control mb-3" [(ngModel)]="user.phone" placeholder="+91 98765 43210" />
+
+            <div class="mt-auto">
+              <button class="btn btn-success w-100 btn-lg rounded-pill" (click)="proceedToPay()">
+                Proceed to Pay <span class="fw-bold">₹{{ totalAmount }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-6">
-        <label class="form-label">Seat Number</label>
-        <input type="text" class="form-control" placeholder="e.g. A1, B2" required>
+    </div>
+  </div>
+
+  <!-- ✅ Bootstrap Modal -->
+  <div class="modal fade" id="popupModal" tabindex="-1" aria-labelledby="popupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-3">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="popupModalLabel">{{ modalTitle }}</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-secondary fs-6">
+          {{ modalMessage }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-success rounded-pill px-4" data-bs-dismiss="modal">
+            OK
+          </button>
+        </div>
       </div>
-      <div class="col-md-6">
-        <label class="form-label">Payment Method</label>
-        <select class="form-select" required>
-          <option value="" disabled selected>Select payment method</option>
-          <option value="card">Credit Card</option>
-          <option value="upi">UPI</option>
-          <option value="netbanking">Net Banking</option>
-          <option value="cod">Cash on Delivery</option>
-        </select>
-      </div>
-      <div class="col-12 text-center">
-        <button type="submit" class="btn btn-primary mt-3">Confirm Booking</button>
-      </div>
-    </form>
+    </div>
   </div>
 </div>

@@ -44,7 +44,10 @@
 
             <div class="d-flex justify-content-between align-items-center mt-3">
               <h5 class="mb-0 text-primary fw-bold">₹{{ item.price }}</h5>
-              <button class="btn btn-outline-primary btn-sm rounded-pill">Book Now</button>
+              <button class="btn btn-outline-primary btn-sm rounded-pill"
+                [routerLink]="'/book-ticket/' + item.scheduleId">
+                Book Now
+              </button>
             </div>
           </div>
         </div>

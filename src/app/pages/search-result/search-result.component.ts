@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { NgIf, NgFor, NgClass, DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ISearchBus, Search } from '../../model/model';
 import { SearchService } from '../../service/search.service';
 
 @Component({
   selector: 'app-search-result',
   standalone: true,
-  imports: [NgIf, NgFor, DatePipe],
+  imports: [NgIf, NgFor, DatePipe, RouterLink],
   templateUrl: './search-result.component.html',
   styleUrls: ['./search-result.component.css']
 })
